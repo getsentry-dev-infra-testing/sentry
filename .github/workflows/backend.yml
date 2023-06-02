@@ -9,7 +9,7 @@ env:
 jobs:
   files-changed:
     name: detect what files changed
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 3
     # Map a step output to a job output
     outputs:
@@ -33,7 +33,7 @@ jobs:
     if: needs.files-changed.outputs.api_docs == 'true'
     needs: files-changed
     name: api docs test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8  # v3.1.0
 
@@ -56,7 +56,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: backend test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 40
     strategy:
       # This helps not having to run multiple jobs because one fails, thus, reducing resource usage
@@ -105,7 +105,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: backend migration tests
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 30
     strategy:
       matrix:
@@ -141,7 +141,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: cli test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 10
     strategy:
       matrix:
@@ -171,7 +171,7 @@ jobs:
     if: needs.files-changed.outputs.backend_dependencies == 'true'
     needs: files-changed
     name: requirements check
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 3
     steps:
       - uses: getsentry/action-github-app-token@97c9e23528286821f97fba885c1b1123284b29cc  # v2.0.0
@@ -204,7 +204,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: backend lint
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 10
     steps:
       - uses: getsentry/action-github-app-token@97c9e23528286821f97fba885c1b1123284b29cc  # v2.0.0
@@ -270,7 +270,7 @@ jobs:
     if: needs.files-changed.outputs.migration_lockfile == 'true'
     needs: files-changed
     name: check migration
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     strategy:
       matrix:
         pg-version: ['14']
@@ -296,7 +296,7 @@ jobs:
     if: needs.files-changed.outputs.plugins == 'true'
     needs: files-changed
     name: plugins test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8  # v3.1.0
@@ -315,7 +315,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: relay test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8  # v3.1.0
@@ -353,7 +353,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: snuba test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 30
     strategy:
       # This helps not having to run multiple jobs because one fails, thus, reducing resource usage
@@ -396,7 +396,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: symbolicator test
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8  # v3.1.0
@@ -440,7 +440,7 @@ jobs:
     if: needs.files-changed.outputs.backend == 'true'
     needs: files-changed
     name: backend typing
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8  # v3.1.0
@@ -477,7 +477,7 @@ jobs:
     name: Backend
     # This is necessary since a failed/skipped dependent job would cause this job to be skipped
     if: always()
-    runs-on: buildjet-4vcpu-ubuntu-2204
+    runs-on: buildjet-8vcpu-ubuntu-2204
     steps:
       # If any jobs we depend on fail, we will fail since this is a required check
       # NOTE: A timeout is considered a failure
